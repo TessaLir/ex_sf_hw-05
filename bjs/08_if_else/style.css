@@ -1,3 +1,11 @@
+input[type="number"], label {
+    width: 35%;
+}
+
+input[type="submit"] {
+    width: 75%;
+}
+
 .game-card {
     height: 100vh;
     font-family: 'Open Sans', monospace;

@@ -14,7 +14,7 @@
         <div class="col col-md-4 offset-md-4">
             <div class="card text-center">
                 <div class="card-header">
-                    <p class="m-0">Вопрос №<span id="orderNumberField">5</span></p>
+                    <p class="m-0">Вопрос №<span id="orderNumberField">0</span></p>
                 </div>
                 <div class="card-body">
                     <div class="row no-gutters">
@@ -24,11 +24,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="btn-group">
+
+                    <div class="btn-group collapse show"  id="collapseOutGame">
+                        <form  id="startGame">
+                            <label for="minimumNumber">Минимум: </label>
+                            <input type="number" required min="-999" max="999" id="minimumNumber">
+                            <br>
+                            <label for="maximumNumber">Максимум: </label>
+                            <input type="number" required min="-999" max="999" id="maximumNumber">
+                            <br>
+                            <input type="submit" value="начать игру">
+                        </form>
+                    </div>
+
+                    <div class="btn-group collapse" id="collapseInGame">
                         <button class="btn btn-info" id="btnLess">&#129047;<br>меньше</button>
                         <button class="btn btn-success btn-lg" id="btnEqual">Верно!</button>
                         <button class="btn btn-info" id="btnOver">больше<br>&#129045;</button>
                     </div>
+
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-link" id="btnRetry">Заново</button>
