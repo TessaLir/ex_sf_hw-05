@@ -50,6 +50,21 @@ const personGenerator = {
             "id_10": "Елена"
         }
     }`,
+    patronymicJson: `{
+        "count": 10,
+        "list": {
+            "id_1": "Николаевич",
+            "id_2": "Александрович",
+            "id_3": "Анатольевич",
+            "id_4": "Петрович",
+            "id_5": "Васильевич",
+            "id_6": "Максимович",
+            "id_7": "Михайлович",
+            "id_8": "Евгеньевич",
+            "id_9": "Всеволодович",
+            "id_10": "Кириллович"
+        }
+    }`,
 
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
@@ -79,6 +94,12 @@ const personGenerator = {
         return `${this.randomValue(this.surnameJson)}${this.person.gender === this.GENDER_FEMALE ? 'а' : ''}`;
     },
 
+    // Метод получения рандомного отчества пользователя.
+    randomPatronymic: function() {
+        const patronymic = this.randomValue(this.patronymicJson);
+        return this.person.gender === this.GENDER_MALE ? patronymic : patronymic.slice(0, -2) + 'на';
+    },
+
     // Метод получения рандомного года рождения пользователя.
     randomBirthYear: function() {
         return this.randomIntNumber(2022, 1900);
@@ -91,6 +112,7 @@ const personGenerator = {
 
         this.person.firstName = this.randomFirstName();
         this.person.surname = this.randomSurname();
+        this.person.patronymic = this.randomPatronymic();
 
         this.person.birthYear = this.randomBirthYear();
 
