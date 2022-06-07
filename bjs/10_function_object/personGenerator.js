@@ -130,6 +130,56 @@ const personGenerator = {
             }
         }
     }`,
+    months: [
+        {
+            "number": 1,
+            "name": "января"
+        },
+        {
+            "number": 2,
+            "name": "февраля"
+        },
+        {
+            "number": 3,
+            "name": "марта"
+        },
+        {
+            "number": 4,
+            "name": "апреля"
+        },
+        {
+            "number": 5,
+            "name": "мая"
+        },
+        {
+            "number": 6,
+            "name": "июня"
+        },
+        {
+            "number": 7,
+            "name": "июля"
+        },
+        {
+            "number": 8,
+            "name": "августа"
+        },
+        {
+            "number": 9,
+            "name": "сентября"
+        },
+        {
+            "number": 10,
+            "name": "октября"
+        },
+        {
+            "number": 11,
+            "name": "ноября"
+        },
+        {
+            "number": 12,
+            "name": "декабря"
+        },
+    ],
 
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
@@ -170,6 +220,46 @@ const personGenerator = {
         return this.randomIntNumber(2022, 1900);
     },
 
+    // Метод получения рандомного месяца рождения пользователя.
+    // Можно было бы сделать метод switch для переводачисла в строку и наобород, но я поленился :-)
+    randomBirthMonth: function() {
+        return this.months[this.randomIntNumber(11, 0)];
+    },
+    
+    // Метод получения рандомного дня рождения пользователя.
+    randomBirthDay: function() {
+        const {birthYear, birthMonth} = this.person;
+        
+        var isEven = function(number) {
+            return number % 2 === 0;
+        }
+
+        // от простого к сложному...
+        // можно было вразу вызывать return в условиях, 
+        // но я решиб поднятием достать переменую :-)
+
+        if (birthMonth.number > 7) {
+            // август, сентябрь, октябрь, ноябрь, декабрь
+            maxDay = isEven(birthMonth.number) ? 31 : 30;
+
+        } else if (birthMonth.number <= 7 && !isEven(birthMonth.number)) {
+            // январь, март, май, июль
+            maxDay = 31;
+
+        } else {
+            if (birthMonth.number !== 2) {
+                // апрель, июнь
+                maxDay = 30;
+            } else {
+                // февраль, если високостный, то 29, в противном случае 28
+                maxDay = birthYear % 4 === 0 ? 29 : 28
+            }
+
+        }
+
+        return this.randomIntNumber(maxDay, 1);
+    },
+
     // Метод получения рандомной профессии пользователя.
     // В перечеслнии JSON указал характеристики:
     // - title - Вовращаемое значение
@@ -184,6 +274,7 @@ const personGenerator = {
               isProfFemale = profession.gender === "female",
               isProfMale = profession.gender === "male";
 
+        // Если условие подошло, то возвращаем тестовое значение поля title из profession
         if ((isFemale && (isProfCommon || isProfFemale)) || (!isFemale && (isProfCommon || isProfMale))) {
             return profession.title;    
         }
@@ -202,6 +293,8 @@ const personGenerator = {
         this.person.patronymic = this.randomPatronymic();
 
         this.person.birthYear = this.randomBirthYear();
+        this.person.birthMonth = this.randomBirthMonth();
+        this.person.birthDay = this.randomBirthDay();
 
         this.person.profession = this.randomProfession();
 
