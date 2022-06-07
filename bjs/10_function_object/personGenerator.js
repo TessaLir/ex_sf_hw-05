@@ -65,6 +65,71 @@ const personGenerator = {
             "id_10": "Кириллович"
         }
     }`,
+    professionJson: `{
+        "count": 15,
+        "list": {
+            "id_1": {
+                "title": "Слесарь",
+                "gender": "male"
+            },
+            "id_2": {
+                "title": "Солдат",
+                "gender": "male"
+            },
+            "id_3": {
+                "title": "Шахтер",
+                "gender": "male"
+            },
+            "id_4": {
+                "title": "Механик",
+                "gender": "male"
+            },
+            "id_5": {
+                "title": "Клоун",
+                "gender": "male"
+            },
+            "id_6": {
+                "title": "Бухгалтер",
+                "gender": "common"
+            },
+            "id_7": {
+                "title": "Юрист",
+                "gender": "common"
+            },
+            "id_8": {
+                "title": "Экономист",
+                "gender": "common"
+            },
+            "id_9": {
+                "title": "Учитель",
+                "gender": "common"
+            },
+            "id_10": {
+                "title": "Профессор",
+                "gender": "common"
+            },
+            "id_11": {
+                "title": "Кондитер",
+                "gender": "female"
+            },
+            "id_12": {
+                "title": "Актриса",
+                "gender": "female"
+            },
+            "id_13": {
+                "title": "Певица",
+                "gender": "female"
+            },
+            "id_14": {
+                "title": "Хозяин",
+                "gender": "female"
+            },
+            "id_15": {
+                "title": "Художник",
+                "gender": "female"
+            }
+        }
+    }`,
 
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
@@ -105,6 +170,28 @@ const personGenerator = {
         return this.randomIntNumber(2022, 1900);
     },
 
+    // Метод получения рандомной профессии пользователя.
+    // В перечеслнии JSON указал характеристики:
+    // - title - Вовращаемое значение
+    // - gender может быть М., Ж. и Общей профессийей основное сравнение идет по этому полю
+    randomProfession: function() {
+        const profession = this.randomValue(this.professionJson);
+
+        // Условие "Это мужчина" не стал добавлять, так как если это "не женщина", то это - "Мужчина"
+        // Константы добавлены, что бы упростить вид условия ниже
+        const isFemale = this.person.gender === this.GENDER_FEMALE,
+              isProfCommon = profession.gender === "common",
+              isProfFemale = profession.gender === "female",
+              isProfMale = profession.gender === "male";
+
+        if ((isFemale && (isProfCommon || isProfFemale)) || (!isFemale && (isProfCommon || isProfMale))) {
+            return profession.title;    
+        }
+
+        // Если условие не подошло, то повторно вызываем сами себя... до удовлетворения условий.
+        return this.randomProfession();
+    },
+
 
     getPerson: function () {
         this.person = {};
@@ -115,6 +202,8 @@ const personGenerator = {
         this.person.patronymic = this.randomPatronymic();
 
         this.person.birthYear = this.randomBirthYear();
+
+        this.person.profession = this.randomProfession();
 
         return this.person;
     }
