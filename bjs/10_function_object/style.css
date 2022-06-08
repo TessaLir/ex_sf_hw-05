@@ -7,6 +7,10 @@ body {
     background-color: lightcyan;
 }
 
+.container {
+    margin-top: 56px;
+}
+
 .avatar-container {
     height: 100%; 
     width: 100%; 
