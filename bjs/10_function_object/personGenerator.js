@@ -65,6 +65,21 @@ const personGenerator = {
             "id_10": "Кириллович"
         }
     }`,
+    embodies: `{
+        "count": 10,
+        "list": {
+            "id_1": "😒",
+            "id_2": "😊",
+            "id_3": "😘",
+            "id_4": "🤩",
+            "id_5": "😎",
+            "id_6": "🙂",
+            "id_7": "😏",
+            "id_8": "😛",
+            "id_9": "🙃",
+            "id_10": "🤨"
+        }
+    }`,
     professionJson: `{
         "count": 15,
         "list": {
@@ -283,6 +298,11 @@ const personGenerator = {
         return this.randomProfession();
     },
 
+    // Импровизация для аватара.
+    randomEmbodies: function() {
+        return this.randomValue(this.embodies);
+    },
+
 
     getPerson: function () {
         this.person = {};
@@ -297,6 +317,7 @@ const personGenerator = {
         this.person.birthDay = this.randomBirthDay();
 
         this.person.profession = this.randomProfession();
+        this.person.embodies = this.randomEmbodies();
 
         return this.person;
     }

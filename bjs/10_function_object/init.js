@@ -18,6 +18,7 @@ window.onload = function()
     // Добавление прочей информации на страницу
     document.querySelector('#genderOutput').innerText = initPerson.gender;
     document.querySelector('#professionOutput').innerText = initPerson.profession;
+    document.querySelector('.avatar').innerText = initPerson.embodies;
 
 };
 
